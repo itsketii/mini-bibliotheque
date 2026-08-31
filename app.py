@@ -174,7 +174,234 @@ def populate_genres():
 
 
 
-# Initialiser la base de données
+# ========== LES ROUTES ==========
+
+
+#LIVRES
+@app.route('/books', methods=['GET'])
+def get_books():
+    conn = get_db_connection()
+    books = conn.execute('SELECT * FROM books').fetchall()
+    conn.close()
+    return jsonify([dict(book) for book in books])
+
+@app.route('/books', methods=['POST'])
+def add_book():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO books (title, description, author, year, genre_id, status, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['author'], data['year'], data['genre_id'], data['status'], data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Livre ajouté !'})
+
+@app.route('/books/<int:id>', methods=['PUT'])
+def update_book(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE books SET title=?, description=?, author=?, year=?, genre_id=?, status=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['author'], data['year'], data['genre_id'], data['status'], data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Livre modifié !'})
+
+@app.route('/books/<int:id>', methods=['DELETE'])
+def delete_book(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM books WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Livre supprimé !'})
+
+
+
+#FILMS
+@app.route('/movies', methods=['GET'])
+def get_movies():
+    conn = get_db_connection()
+    movies = conn.execute('SELECT * FROM movies').fetchall()
+    conn.close()
+    return jsonify([dict(movie) for movie in movies])
+
+@app.route('/movies', methods=['POST'])
+def add_movie():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO movies (title, description, director, year, genre_id, duration, status, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['director'], data['year'], data['genre_id'], data['duration'], data['status'], data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Film ajouté !'})
+
+@app.route('/movies/<int:id>', methods=['PUT'])
+def update_movie(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE movies SET title=?, description=?, director=?, year=?, genre_id=?, duration=?, status=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['director'], data['year'], data['genre_id'], data['duration'], data['status'], data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Film modifié !'})
+
+@app.route('/movies/<int:id>', methods=['DELETE'])
+def delete_movie(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM movies WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Film supprimé !'})
+
+
+#SÉRIES
+@app.route('/shows', methods=['GET'])
+def get_shows():
+    conn = get_db_connection()
+    shows = conn.execute('SELECT * FROM show').fetchall()
+    conn.close()
+    return jsonify([dict(show) for show in shows])
+
+@app.route('/shows', methods=['POST'])
+def add_show():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO show (title, description, creator, start_year, end_year, genre_id, duration, nb_seasons, actual_season, actual_episode, status, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['creator'], data['start_year'], data.get('end_year'), data['genre_id'], data['duration'], data['nb_seasons'], data.get('actual_season'), data.get('actual_episode'), data['status'], data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Série ajoutée !'})
+
+@app.route('/shows/<int:id>', methods=['PUT'])
+def update_show(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE show SET title=?, description=?, creator=?, start_year=?, end_year=?, genre_id=?, duration=?, nb_seasons=?, actual_season=?, actual_episode=?, status=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['creator'], data['start_year'], data.get('end_year'), data['genre_id'], data['duration'], data['nb_seasons'], data.get('actual_season'), data.get('actual_episode'), data['status'], data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Série modifiée !'})
+
+@app.route('/shows/<int:id>', methods=['DELETE'])
+def delete_show(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM show WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Série supprimée !'})
+
+
+#JEUX VIDÉOS
+@app.route('/games', methods=['GET'])
+def get_games():
+    conn = get_db_connection()
+    games = conn.execute('SELECT * FROM games').fetchall()
+    conn.close()
+    return jsonify([dict(game) for game in games])
+
+@app.route('/games', methods=['POST'])
+def add_game():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO games (title, description, developer, editor, year, genre_id, platform, status, hours_played, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['developer'], data['editor'], data['year'], data['genre_id'], data['platform'], data['status'], data.get('hours_played'), data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Jeu ajouté !'})
+
+@app.route('/games/<int:id>', methods=['PUT'])
+def update_game(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE games SET title=?, description=?, developer=?, editor=?, year=?, genre_id=?, platform=?, status=?, hours_played=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['developer'], data['editor'], data['year'], data['genre_id'], data['platform'], data['status'], data.get('hours_played'), data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Jeu modifié !'})
+
+@app.route('/games/<int:id>', methods=['DELETE'])
+def delete_game(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM games WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Jeu supprimé !'})
+
+
+#MUSIQUES
+@app.route('/music', methods=['GET'])
+def get_music():
+    conn = get_db_connection()
+    music = conn.execute('SELECT * FROM music').fetchall()
+    conn.close()
+    return jsonify([dict(m) for m in music])
+
+@app.route('/music', methods=['POST'])
+def add_music():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO music (title, description, artist, album, year, genre_id, playlist_mood, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['artist'], data['album'], data['year'], data['genre_id'], data['playlist_mood'], data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Musique ajoutée !'})
+
+@app.route('/music/<int:id>', methods=['PUT'])
+def update_music(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE music SET title=?, description=?, artist=?, album=?, year=?, genre_id=?, playlist_mood=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['artist'], data['album'], data['year'], data['genre_id'], data['playlist_mood'], data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Musique modifiée !'})
+
+@app.route('/music/<int:id>', methods=['DELETE'])
+def delete_music(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM music WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Musique supprimée !'})
+
+
+#MANGAS
+@app.route('/manga', methods=['GET'])
+def get_manga():
+    conn = get_db_connection()
+    manga = conn.execute('SELECT * FROM manga').fetchall()
+    conn.close()
+    return jsonify([dict(m) for m in manga])
+
+@app.route('/manga', methods=['POST'])
+def add_manga():
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO manga (title, description, author, year, genre_id, status, nb_chapters, actual_chapter, nb_volumes, actual_volume, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                 (data['title'], data['description'], data['author'], data['year'], data['genre_id'], data['status'], data['nb_chapters'], data['actual_chapter'], data['nb_volumes'], data.get('actual_volume'), data['rating'], data['review'], data['added'], data['user_id']))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Manga ajouté !'})
+
+@app.route('/manga/<int:id>', methods=['PUT'])
+def update_manga(id):
+    data = request.get_json()
+    conn = get_db_connection()
+    conn.execute('UPDATE manga SET title=?, description=?, author=?, year=?, genre_id=?, status=?, nb_chapters=?, actual_chapter=?, nb_volumes=?, actual_volume=?, rating=?, review=? WHERE id=?',
+                 (data['title'], data['description'], data['author'], data['year'], data['genre_id'], data['status'], data['nb_chapters'], data['actual_chapter'], data['nb_volumes'], data.get('actual_volume'), data['rating'], data['review'], id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Manga modifié !'})
+
+@app.route('/manga/<int:id>', methods=['DELETE'])
+def delete_manga(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM manga WHERE id=?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Manga supprimé !'})
+
+
+# ========== INITIALISATION ==========
+
 def init_db():
     # Tables users et genres d'abord
     create_table()
@@ -195,7 +422,16 @@ def init_db():
     
     # Remplir les genres
     populate_genres()
+    
+    # Créer l'utilisateur "Kety"
+    conn = get_db_connection()
+    conn.execute("INSERT OR IGNORE INTO users (name, email) VALUES (?, ?)", 
+                 ("Kety", "ketsia.kouadio@iit.ci"))
+    conn.commit()
+    conn.close()
+    
     print("✅ Base de données initialisée !")
+
 
 # Appeler au démarrage
 if __name__ == '__main__':
