@@ -23,7 +23,7 @@ def create_table():
 #création de la table "livres"
 def create_books_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, author TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_books (id), status TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, author TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, status TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_books (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
@@ -32,7 +32,7 @@ def create_books_table():
 #création de la table "films"
 def create_movies_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS movies (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, director TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_movies (id), duration INTEGER NOT NULL, status TEXT NOT NULL,rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS movies (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, director TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, duration INTEGER NOT NULL, status TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_movies (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
@@ -40,7 +40,7 @@ def create_movies_table():
 #création de la table "serie"
 def create_show_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS show (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, creator TEXT NOT NULL, start_year INTEGER NOT NULL, end_year INTEGER, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_show (id), duration INTEGER NOT NULL, nb_seasons INTEGER NOT NULL, actual_season INTEGER, actual_episode INTEGER, status TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS show (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, creator TEXT NOT NULL, start_year INTEGER NOT NULL, end_year INTEGER, genre_id INTEGER NOT NULL, duration INTEGER NOT NULL, nb_seasons INTEGER NOT NULL, actual_season INTEGER, actual_episode INTEGER, status TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_show (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
@@ -48,7 +48,7 @@ def create_show_table():
 #création de la table "jeux vidéos"
 def create_games_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, developer TEXT NOT NULL, editor TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_games (id), platform TEXT NOT NULL, status TEXT NOT NULL, hours_played INTEGER, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, developer TEXT NOT NULL, editor TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, platform TEXT NOT NULL, status TEXT NOT NULL, hours_played INTEGER, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_games (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
@@ -56,7 +56,7 @@ def create_games_table():
 #création de la table "musiques"
 def create_music_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS music (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, artist TEXT NOT NULL, album TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_music (id), playlist_mood TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS music (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, artist TEXT NOT NULL, album TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, playlist_mood TEXT NOT NULL, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_music (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
@@ -64,7 +64,7 @@ def create_music_table():
 #création de la table "mangas"
 def create_manga_table():
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS manga (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, author TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_manga (id), status TEXT NOT NULL, nb_chapters INTEGER NOT NULL, actual_chapter INTEGER NOT NULL, nb_volumes INTEGER NOT NULL, actual_volume INTEGER, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users (id))')
+    conn.execute('CREATE TABLE IF NOT EXISTS manga (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT NOT NULL, author TEXT NOT NULL, year INTEGER NOT NULL, genre_id INTEGER NOT NULL, status TEXT NOT NULL, nb_chapters INTEGER NOT NULL, actual_chapter INTEGER NOT NULL, nb_volumes INTEGER NOT NULL, actual_volume INTEGER, rating REAL NOT NULL, review TEXT NOT NULL, added DATE NOT NULL, user_id INTEGER NOT NULL, FOREIGN KEY (genre_id) REFERENCES genres_manga (id), FOREIGN KEY (user_id) REFERENCES users (id))')
     conn.commit()
     conn.close()
 
