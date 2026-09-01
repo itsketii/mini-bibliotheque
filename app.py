@@ -1,8 +1,13 @@
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect,  render_template
 import sqlite3
 
 
 app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 #connection à la base de données
