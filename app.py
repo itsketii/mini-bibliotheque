@@ -1,13 +1,8 @@
-from flask import Flask, jsonify, request, redirect,  render_template
+from flask import Flask, jsonify, request, redirect, render_template
 import sqlite3
 
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 
 #connection à la base de données
@@ -403,6 +398,29 @@ def delete_manga(id):
     conn.commit()
     conn.close()
     return jsonify({'message': 'Manga supprimé !'})
+
+
+# SERVIR LA PAGE HTML
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+# RÉCUPÉRER TOUS LES GENRES
+@app.route('/genres', methods=['GET'])
+def get_all_genres():
+    conn = get_db_connection()
+    genres = {}
+    
+    genre_tables = ['genres_books', 'genres_movies', 'genres_show', 'genres_games', 'genres_music', 'genres_manga']
+    table_keys = ['books', 'movies', 'shows', 'games', 'music', 'manga']
+    
+    for table, key in zip(genre_tables, table_keys):
+        result = conn.execute(f'SELECT id, name FROM {table} ORDER BY name').fetchall()
+        genres[key] = [dict(row) for row in result]
+    
+    conn.close()
+    return jsonify(genres)
 
 
 # ========== INITIALISATION ==========
