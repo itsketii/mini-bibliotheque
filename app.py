@@ -301,11 +301,12 @@ def get_games():
 def add_game():
     data = request.get_json()
     conn = get_db_connection()
-    conn.execute('INSERT INTO games (title, description, developer, editor, year, genre_id, platform, status, hours_played, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    cursor = conn.execute('INSERT INTO games (title, description, developer, editor, year, genre_id, platform, status, hours_played, rating, review, added, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                  (data['title'], data['description'], data['developer'], data['editor'], data['year'], data['genre_id'], data['platform'], data['status'], data.get('hours_played'), data['rating'], data['review'], data['added'], data['user_id']))
     conn.commit()
+    game = conn.execute('SELECT * FROM games WHERE id=?', (cursor.lastrowid,)).fetchone()
     conn.close()
-    return jsonify({'message': 'Jeu ajouté !'})
+    return jsonify(dict(game)), 201
 
 @app.route('/games/<int:id>', methods=['PUT'])
 def update_game(id):

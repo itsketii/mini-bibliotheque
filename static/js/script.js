@@ -470,6 +470,7 @@ async function handleFormSubmit(e, cat, id){
   item.status = document.getElementById("f-status").value || null;
   item.rating = S.formNote || null;
   item.review = document.getElementById("f-review").value || null;
+  item.description = item.review || "";
   
   // Champs spécifiques
   if(cat==="games"){
