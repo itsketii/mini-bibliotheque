@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="rose">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini-Bibliothèque Kety</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="sidebar-topbar">
+      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-expanded="true" aria-label="Réduire">‹</button>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="avatar-wrap">
+        <span class="avatar-default">K</span>
+        <span class="avatar-overlay">👤</span>
+      </div>
+      <div class="profile-text">
+        <p>Ma collection</p>
+        <h1>Kety</h1>
+      </div>
+    </div>
+
+    <nav id="nav">
+      <button class="nav-btn active" id="nav-home" data-view="home">
+        <span class="icon">🏠</span><span class="nav-text">Accueil</span>
+      </button>
+      <p class="nav-section-label">Catégories</p>
+    </nav>
+
+    <div class="theme-switcher">
+      <p class="nav-section-label theme-label" style="padding-left:0">Thème</p>
+      <div class="theme-options" id="theme-options"></div>
+    </div>
+  </aside>
+
+  <div id="main">
+    <header>
+      <div class="header-title">
+        <span class="icon" id="header-icon">🏠</span>
+        <div>
+          <h2 id="header-title-text">Accueil</h2>
+          <p id="header-sub"></p>
+        </div>
+      </div>
+      <button class="btn-primary" id="add-btn" style="display:none">+ Ajouter</button>
+    </header>
+
+    <div id="filters" style="display:none">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search-input" placeholder="Rechercher...">
+      </div>
+      <div class="filter-pills" id="filter-pills"></div>
+    </div>
+
+    <div id="content"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modal-title"></h2>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
