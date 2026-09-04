@@ -1,5 +1,5 @@
 /* Configuration API */
-const API = "http://localhost:5000";
+const API = "";
 
 /* Catégories */
 const CATS = [
